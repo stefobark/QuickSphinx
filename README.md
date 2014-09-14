@@ -15,12 +15,12 @@ Build the image:
 docker build -t quick/sphinx .
 ```
 
-And, when starting the container, pass in necessary parameters:
+And, when starting the container, just pass in necessary parameters:
 ```
-docker run -d -p 9311:9306 -e SQL_DB="test" -e SQL_HOST="172.17.0.2" -e SQL_PASS="password" -e SQL_PORT="3307" -e SQL_USER="admin"quick/sphinx /sbin/my_init
+docker run -d -p 9311:9306 -e SQL_DB="test" -e SQL_HOST="172.17.0.2" -e SQL_PASS="password" -e SQL_PORT="3307" -e SQL_USER="admin" quick/sphinx /sbin/my_init
 ```
 
-We've got Sphinx listening to 9306 from within the container, but, from our host machine, it will be 9311. 
+The "-p 9311:9306" means that we've got Sphinx listening to 9306 from within the container, but we'll access Sphinx on 9311 from the host machine. And, in case you're wondering, /sbin/my_init will run 'indexandsearch.sh'.
 
 Now, just change the "-e"s to match your setup, open up the command line interface, and start Sphinx searching:
 ```
@@ -28,9 +28,11 @@ mysql -h0 -P9311
 SELECT *, weight() FROM test WHERE MATCH('@title distributed') \G
 ```
 
-Then, go to http://sphinxsearch.com to read more about Sphinx searching.
+Then, go to http://sphinxsearch.com to read more about Sphinx.
 
-I'll be tweaking this configuration (to enable some cool features). When I do, I'll update this readme to show them off. For now, you can do wildcard searches because I've set 'min_infix_len=3'. 
+I'll be tweaking this configuration (to enable some cool features). When I do, I'll update this readme to show them off. 
+
+For now, you can do wildcard searches because I've set 'min_infix_len=3'. 
 
 Like this:
 ```
