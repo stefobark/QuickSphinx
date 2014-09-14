@@ -22,7 +22,7 @@ docker run -d -p 9311:9306 -e SQL_DB="test" -e SQL_HOST="172.17.0.2" -e SQL_PASS
 
 The "-p 9311:9306" means that we've got Sphinx listening to 9306 from within the container, but we'll access Sphinx on 9311 from the host machine. And, in case you're wondering, /sbin/my_init will run 'indexandsearch.sh'.
 
-Now, just change the "-e"s to match your setup, open up the command line interface, and start Sphinx searching:
+So, just change the "-e"s to match your setup, run that command, open up the command line interface, and start Sphinx searching!!
 ```
 mysql -h0 -P9311
 SELECT *, weight() FROM test WHERE MATCH('@title distributed') \G
