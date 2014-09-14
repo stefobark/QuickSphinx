@@ -12,7 +12,7 @@ mysql -uadmin -p sphinxy < docs.sql
 
 Build the image:
 ```
-docker build -t quick/sphinx
+docker build -t quick/sphinx .
 ```
 
 And, when starting the container, pass in necessary parameters:
