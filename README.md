@@ -3,7 +3,7 @@ QuickSphinx
 
 Assuming you're running Docker, here is a really quick and easy way to get started playing around with Sphinx (using a MySQL datasource).
 
-To follow along with what I did, create a database called sphinxy. Then, get this SQL file [here](https://github.com/adriannuta/SphinxAutocompleteExample/blob/master/scripts/docs.tar.gz). It will build a table full of text from the Sphinx documentation (this table is used by 'gosphinx.conf'). 
+To follow along, create a database called sphinxy. Then, get this SQL file [here](https://github.com/adriannuta/SphinxAutocompleteExample/blob/master/scripts/docs.tar.gz). It will build a table full of text from the Sphinx documentation (this table is used by 'gosphinx.conf'). 
 
 Import it:
 ```
