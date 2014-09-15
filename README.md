@@ -1,24 +1,15 @@
 QuickSphinx
 ===========
+A really quick and easy way to get started playing around with Sphinx!
 
-Assuming you're running Docker, here is a really quick and easy way to get started playing around with Sphinx (using a MySQL datasource).
+When starting the container, just pass in necessary parameters, which are:
+SQL_HOST, SQL_PORT, SQL_USER, SQL_PASS, and SQL_DB.
 
-To follow along, create a database called sphinxy. Then, get this SQL file [here](https://github.com/adriannuta/SphinxAutocompleteExample/blob/master/scripts/docs.tar.gz). It will build a table full of text from the Sphinx documentation (this table is used by 'gosphinx.conf'). 
-
-Import it:
-```
-mysql -uadmin -p sphinxy < docs.sql
-```
-
-Build the image:
-```
-docker build -t quick/sphinx .
-```
-
-And, when starting the container, just pass in necessary parameters:
+Like this:
 ```
 docker run -d -p 9311:9306 -e SQL_DB="test" -e SQL_HOST="172.17.0.2" -e SQL_PASS="password" -e SQL_PORT="3307" -e SQL_USER="admin" quick/sphinx /sbin/my_init
 ```
+
 
 The "-p 9311:9306" means that we've got Sphinx listening to 9306 from within the container, but we'll access Sphinx on 9311 from the host machine. And, in case you're wondering, /sbin/my_init will run 'indexandsearch.sh'.
 
