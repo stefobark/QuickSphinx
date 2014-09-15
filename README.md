@@ -3,7 +3,7 @@ QuickSphinx
 A really quick and easy way to get started playing around with Sphinx!
 
 When starting the container, just pass in necessary parameters, which are:
-SQL_HOST, SQL_PORT, SQL_USER, SQL_PASS, and SQL_DB.
+SQL_HOST, SQL_PORT, SQL_USER, SQL_PASS, and SQL_DB. gosphinx.conf will pick them up and index from the database you point to.
 
 Like this:
 ```
