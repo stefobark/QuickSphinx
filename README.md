@@ -4,6 +4,8 @@ Using [Docker](https://www.docker.com/)? If so, here's a really quick and easy w
 
 ##Option 1 (tsvpipe index)##
 
+Go watch a video where I run through all these steps, [here](https://www.youtube.com/watch?v=y32TdSOzkg8).
+
 ###Build###
 Go to the folder where you downloaded these files, and:
 ```
@@ -125,6 +127,8 @@ mysql> SELECT title,body, weight() FROM tsv_test WHERE MATCH('@title How MAYBE @
 ```
 
 ##Option 2 (database)##
+
+Go watch a video where I run through all these steps, [here](https://www.youtube.com/watch?v=Dw5rdrPLMlE).
 
 ###Or, point to your database###
 Maybe you want to use your database. If you don't want to edit the config file I've included, then just use [this sample data](https://github.com/adriannuta/SphinxAutocompleteExample/blob/master/scripts/docs.tar.gz). Import it into your database. Then, just pass in necessary parameters to Sphinx when starting the container, which are:
