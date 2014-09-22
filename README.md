@@ -130,7 +130,7 @@ mysql> SELECT title,body, weight() FROM tsv_test WHERE MATCH('@title How MAYBE @
 
 Go watch a video where I run through all these steps, [here](https://www.youtube.com/watch?v=Dw5rdrPLMlE).
 
-###Or, point to your database###
+###Point to your database###
 Maybe you want to use your database. If you don't want to edit the config file I've included, then just use [this sample data](https://github.com/adriannuta/SphinxAutocompleteExample/blob/master/scripts/docs.tar.gz). Import it into your database. Then, just pass in necessary parameters to Sphinx when starting the container, which are:
 SQL_HOST, SQL_PORT, SQL_USER, SQL_PASS, and SQL_DB. gosphinx.conf will pick up the environment variables and build an index using the database you point to. 
 
