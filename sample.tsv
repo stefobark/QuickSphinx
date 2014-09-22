@@ -1,0 +1,5 @@
+1	1,2,3,4,5	{"state" : "wa", "city" : "seattle", "people" : { "author" : "jim", "editor" : "jane"} }	How to Search Sphinx	SELECT * FROM test WHERE MATCH('search');
+2	4,3,5	{"state" : "id", "city" : "boise", "people" : { "author" : "jane", "editor" : "jim"} }	How to Index TSV files	Use TSVpipe!
+3	2,4	{"state" : "ca", "city" : "compton", "people" : { "author" : "snoop", "editor" : "dre"} }	Some other document	Some kinda body text
+4	3,5,6	{"state" : "wa", "city" : "olympia", "people" : { "author" : "steve", "editor" : "steve", "king" : "steve"} }	Why does it always rain?	Because!
+5	4,6	{"state" : "wa", "city" : "yakima", "people" : { "author" : "tom", "editor" : "harry", "critic" : "everyone"} }	Why is everything dry?	Because!
