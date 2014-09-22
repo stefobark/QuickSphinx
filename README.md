@@ -2,6 +2,8 @@ QuickSphinx
 ===========
 Using [Docker](https://www.docker.com/)? If so, here's a really quick and easy way to get started playing around with Sphinx!
 
+##Option 1 (tsvpipe index)##
+
 ###Build###
 Go to the folder where you downloaded these files, and:
 ```
@@ -13,6 +15,11 @@ docker run -d -p 9311:9306 quick/sphinx /sbin/my_init
 ```
 
 I put a little tsv file in there, so now you can just open up the command line interface and start searching.
+###Command line###
+Start it up!
+```
+mysql -h0 -P9311
+```
 
 ####There's a [JSON attribute](http://sphinxsearch.com/blog/2013/08/08/full-json-support-in-trunk/) in this index, so you might try some things like...####
 
@@ -117,15 +124,24 @@ mysql> SELECT title,body, weight() FROM tsv_test WHERE MATCH('@title How MAYBE @
 2 rows in set (0.00 sec)
 ```
 
-###Point to your MySQL DB###
-If you don't want to edit the config file I've included, then just use [this sample data](https://github.com/adriannuta/SphinxAutocompleteExample/blob/master/scripts/docs.tar.gz). Import it into your database. Then, just pass in necessary parameters to Sphinx when starting the container, which are:
-SQL_HOST, SQL_PORT, SQL_USER, SQL_PASS, and SQL_DB. gosphinx.conf will pick up the environment variables and build an index using the database you point to.
+##Option 2 (database)##
 
-Like this:
+###Or, point to your database###
+Maybe you want to use your database. If you don't want to edit the config file I've included, then just use [this sample data](https://github.com/adriannuta/SphinxAutocompleteExample/blob/master/scripts/docs.tar.gz). Import it into your database. Then, just pass in necessary parameters to Sphinx when starting the container, which are:
+SQL_HOST, SQL_PORT, SQL_USER, SQL_PASS, and SQL_DB. gosphinx.conf will pick up the environment variables and build an index using the database you point to. 
+
+To index a custom table (one that is not built with the sample data), just edit gosphinx.conf. Change these things:
+```
+sql_query        = select * from docs
+sql_field_string = title
+sql_field_string = content
+```
+You don't need to declare fulltext fields unless you want to see the text in the result set (then do like I did, use sql_field_string). Then, just declare the different attribute types to match the data types in your table. Either way, you can still pass the connection parameters in when starting the container...
+
+To pass in connection parameters, start the container like this (change the values to match your setup):
 ```
 docker run -d -p 9311:9306 -e SQL_DB="test" -e SQL_HOST="172.17.0.2" -e SQL_PASS="password" -e SQL_PORT="3307" -e SQL_USER="admin" quick/sphinx /sbin/my_init
 ```
-
 
 The "-p 9311:9306" means that we've got Sphinx listening to 9306 from within the container, but we'll access Sphinx on 9311 from the host machine. And, in case you're wondering, /sbin/my_init will run 'indexandsearch.sh'.
 
