@@ -15,7 +15,7 @@ docker run -d -p 9311:9306 quick/sphinx /sbin/my_init
 ```
 
 I put a little tsv file in there, so now you can just open up the command line interface and start searching.
-###Command line###
+
 Start it up!
 ```
 mysql -h0 -P9311
