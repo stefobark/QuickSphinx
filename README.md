@@ -35,18 +35,18 @@ docker run -d -p 9311:9306 -e SQL_DB="test" -e SQL_HOST="172.17.0.2" -e SQL_PASS
 
 With RT indexes, you just push data directly into the index with INSERT | REPLACE, or delete it with DELETE.
 
-###INSERT | REPLACE###:
+####INSERT | REPLACE####
 ```
 {INSERT | REPLACE} INTO index [(column, ...)] VALUES (value, ...) [, (...)]
 ```
 
-###DELETE###:
+####DELETE####
 ```
 mysql> DELETE FROM rt WHERE MATCH ('dumy') AND mva1>206;
 ```
 So, to get started, just starting INSERTing! Or, you can also convert a regular index into a realtime index.
 
-###Like this:###
+####Like this:####
 ```
 ATTACH INDEX diskindex TO RTINDEX rtindex
 ```
