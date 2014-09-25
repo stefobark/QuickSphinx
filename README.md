@@ -5,7 +5,10 @@ Using [Docker](https://www.docker.com/)? If so, here's a really quick and easy w
 ###Contents###
 
 0. [First Steps](https://github.com/stefobark/QuickSphinx#first-steps)
-1. [Real Time Index](https://github.com/stefobark/QuickSphinx#option-0-realtime-index)
+1. [Real-time Index](https://github.com/stefobark/QuickSphinx#option-0-realtime-index)
+  0. [INSERT](https://github.com/stefobark/QuickSphinx#insert--replace)
+  1. [DELETE](https://github.com/stefobark/QuickSphinx#delete)
+  2. [Convert Regular Index to Real-time Index](https://github.com/stefobark/QuickSphinx#like-this)
 2. [TSVpipe Index](https://github.com/stefobark/QuickSphinx#option-1-tsvpipe-index)
   0. [Filter by JSON](https://github.com/stefobark/QuickSphinx#theres-a-json-attribute-in-this-index-so-you-might-try-some-things-like)
   1. [Filter by Multi-Valued Attribute](https://github.com/stefobark/QuickSphinx#theres-also-a-multi-value-attribute)
