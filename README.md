@@ -2,6 +2,32 @@ QuickSphinx
 ===========
 Using [Docker](https://www.docker.com/)? If so, here's a really quick and easy way to get started playing around with Sphinx!
 
+##Option 0 (realtime index)##
+
+With RT indexes, you just push data directly into the index with INSERT | REPLACE, or delete it with DELETE.
+
+INSERT | REPLACE
+```
+{INSERT | REPLACE} INTO index [(column, ...)] VALUES (value, ...) [, (...)]
+```
+
+DELETE:
+```
+mysql> DELETE FROM rt WHERE MATCH ('dumy') AND mva1>206;
+```
+So, to get started, just starting INSERTing! Or, you can also convert a regular index into a realtime index.
+
+Like this:
+```
+ATTACH INDEX diskindex TO RTINDEX rtindex
+```
+
+**Just remember**:
+
+    -Target RT index needs to be empty
+    -Source disk index needs to have index_sp=0, boundary_step=0, stopword_step=1.
+    -Source disk index needs to have an empty index_zones setting.
+
 ##Option 1 (tsvpipe index)##
 
 Go watch a video where I run through all these steps, [here](https://www.youtube.com/watch?v=y32TdSOzkg8).
