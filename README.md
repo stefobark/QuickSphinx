@@ -4,10 +4,15 @@ Using [Docker](https://www.docker.com/)? If so, here's a really quick and easy w
 
 ###Contents###
 
-0. [First Steps]
+0. [First Steps](https://github.com/stefobark/QuickSphinx#first-steps)
 1. [Real Time Index](https://github.com/stefobark/QuickSphinx#option-0-realtime-index)
 2. [TSVpipe Index](https://github.com/stefobark/QuickSphinx#option-1-tsvpipe-index)
+  0. [Filter by JSON](https://github.com/stefobark/QuickSphinx#theres-a-json-attribute-in-this-index-so-you-might-try-some-things-like)
+  1. [Filter by Multi-Valued Attribute](https://github.com/stefobark/QuickSphinx#theres-also-a-multi-value-attribute)
+  2. [Text Search](https://github.com/stefobark/QuickSphinx#regular-ol-text-search)
 3. [Database Index](https://github.com/stefobark/QuickSphinx#option-2-database)
+  0. [Use Sample Data](https://github.com/stefobark/QuickSphinx#point-to-your-database)
+  1. 
 
 ##First Steps##
 ###Build###
@@ -29,18 +34,18 @@ docker run -d -p 9311:9306 -e SQL_DB="test" -e SQL_HOST="172.17.0.2" -e SQL_PASS
 
 With RT indexes, you just push data directly into the index with INSERT | REPLACE, or delete it with DELETE.
 
-INSERT | REPLACE
+**INSERT | REPLACE**:
 ```
 {INSERT | REPLACE} INTO index [(column, ...)] VALUES (value, ...) [, (...)]
 ```
 
-DELETE:
+**DELETE**:
 ```
 mysql> DELETE FROM rt WHERE MATCH ('dumy') AND mva1>206;
 ```
 So, to get started, just starting INSERTing! Or, you can also convert a regular index into a realtime index.
 
-Like this:
+**Like this**:
 ```
 ATTACH INDEX diskindex TO RTINDEX rtindex
 ```
@@ -171,8 +176,9 @@ Go watch a video where I run through all these steps, [here](https://www.youtube
 
 ###Point to your database###
 Maybe you want to use your database. If you don't want to edit the config file I've included, then just use [this sample data](https://github.com/adriannuta/SphinxAutocompleteExample/blob/master/scripts/docs.tar.gz). Import it into your database. Then, just pass in necessary parameters to Sphinx when starting the container, which are:
-SQL_HOST, SQL_PORT, SQL_USER, SQL_PASS, and SQL_DB. gosphinx.conf will pick up the environment variables and build an index using the database you point to. 
+SQL_HOST, SQL_PORT, SQL_USER, SQL_PASS, and SQL_DB. gosphinx.conf will pick up the environment variables and build an index using the database you point to (see an example in 'First Steps'). 
 
+###Custom Table###
 To index a custom table (one that is not built with the sample data), just edit gosphinx.conf. Change these things:
 ```
 sql_query        = select * from docs
