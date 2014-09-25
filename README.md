@@ -12,7 +12,7 @@ Using [Docker](https://www.docker.com/)? If so, here's a really quick and easy w
   2. [Text Search](https://github.com/stefobark/QuickSphinx#regular-ol-text-search)
 3. [Database Index](https://github.com/stefobark/QuickSphinx#option-2-database)
   0. [Use Sample Data](https://github.com/stefobark/QuickSphinx#point-to-your-database)
-  1. 
+  1. [Use Custom Data](https://github.com/stefobark/QuickSphinx#custom-table)
 
 ##First Steps##
 ###Build###
@@ -200,12 +200,12 @@ SELECT *, weight() FROM test WHERE MATCH('@title distributed') \G
 Then, go to http://sphinxsearch.com to read more about Sphinx.
 
 I'll be tweaking this configuration (to enable some cool features). When I do, I'll update this readme to show them off. 
-
+###Wildcard Example###
 For now, you can do wildcard searches because I've set 'min_infix_len=3'. 
 
 Like this:
 ```
-mysql> select *, weight() from test where match('@title *hos*') \G
+mysql> select *, weight() from test where match('@title *hos?*') \G
 *************************** 1. row ***************************
       id: 134
    title: sql_host 
