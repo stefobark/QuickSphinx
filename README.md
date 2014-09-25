@@ -47,7 +47,7 @@ With RT indexes, you just push data directly into the index with INSERT | REPLAC
 ```
 mysql> DELETE FROM rt WHERE MATCH ('dumy') AND mva1>206;
 ```
-So, to get started, just starting INSERTing! Or, you can also convert a regular index into a realtime index.
+So, to get started, just starting INSERTing! Or, you can also convert a regular index into a realtime index-- which is a really good idea if you're planning to insert a whole bunch of data at once. Just use indexer (build a regular indexer) and then convert it. This is optimal for a few reasons, which are discussed in more detail [here](http://sphinxsearch.com/blog/?p=2881).
 
 ####Like this:####
 ```
