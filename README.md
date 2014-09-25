@@ -2,6 +2,29 @@ QuickSphinx
 ===========
 Using [Docker](https://www.docker.com/)? If so, here's a really quick and easy way to get started playing around with Sphinx!
 
+###Contents###
+
+0. [First Steps]
+1. [Real Time Index](https://github.com/stefobark/QuickSphinx#option-0-realtime-index)
+2. [TSVpipe Index](https://github.com/stefobark/QuickSphinx#option-1-tsvpipe-index)
+3. [Database Index](https://github.com/stefobark/QuickSphinx#option-2-database)
+
+##First Steps##
+###Build###
+Go to the folder where you downloaded these files, and:
+```
+docker build -t quick/sphinx .
+```
+
+###Run###
+```
+docker run -d -p 9306:9306 quick/sphinx /sbin/my_init
+```
+Or, if you're **connecting to your database**, just pass in connection parameters. Start the container like this (change the values to match your setup):
+```
+docker run -d -p 9311:9306 -e SQL_DB="test" -e SQL_HOST="172.17.0.2" -e SQL_PASS="password" -e SQL_PORT="3307" -e SQL_USER="admin" quick/sphinx /sbin/my_init
+```
+
 ##Option 0 (realtime index)##
 
 With RT indexes, you just push data directly into the index with INSERT | REPLACE, or delete it with DELETE.
@@ -31,16 +54,6 @@ ATTACH INDEX diskindex TO RTINDEX rtindex
 ##Option 1 (tsvpipe index)##
 
 Go watch a video where I run through all these steps, [here](https://www.youtube.com/watch?v=y32TdSOzkg8).
-
-###Build###
-Go to the folder where you downloaded these files, and:
-```
-docker build -t quick/sphinx .
-```
-###Run###
-```
-docker run -d -p 9311:9306 quick/sphinx /sbin/my_init
-```
 
 I put a little tsv file in there, so now you can just open up the command line interface and start searching.
 
@@ -168,10 +181,7 @@ sql_field_string = content
 ```
 You don't need to declare fulltext fields unless you want to see the text in the result set (then do like I did, use sql_field_string). Then, just declare the different attribute types to match the data types in your table. Either way, you can still pass the connection parameters in when starting the container...
 
-To pass in connection parameters, start the container like this (change the values to match your setup):
-```
-docker run -d -p 9311:9306 -e SQL_DB="test" -e SQL_HOST="172.17.0.2" -e SQL_PASS="password" -e SQL_PORT="3307" -e SQL_USER="admin" quick/sphinx /sbin/my_init
-```
+
 
 The "-p 9311:9306" means that we've got Sphinx listening to 9306 from within the container, but we'll access Sphinx on 9311 from the host machine. And, in case you're wondering, /sbin/my_init will run 'indexandsearch.sh'.
 
