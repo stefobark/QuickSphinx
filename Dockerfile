@@ -10,5 +10,6 @@ RUN mkdir -p /etc/my_init.d
 ADD indexandsearch.sh /etc/my_init.d/indexandsearch.sh
 RUN chmod a+x /etc/my_init.d/indexandsearch.sh
 ADD searchd.sh /
+ADD sample.tsv /
 RUN chmod a+x searchd.sh
 ADD gosphinx.conf /etc/sphinxsearch/gosphinx.conf
