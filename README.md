@@ -29,10 +29,8 @@ docker build -t quick/sphinx .
 ```
 docker run -d -p 9306:9306 quick/sphinx /sbin/my_init
 ```
-Or, if you're **connecting to your database**, just pass in connection parameters. Start the container like this (change the values to match your setup):
-```
-docker run -d -p 9311:9306 -e SQL_DB="test" -e SQL_HOST="172.17.0.2" -e SQL_PASS="password" -e SQL_PORT="3307" -e SQL_USER="admin" quick/sphinx /sbin/my_init
-```
+
+Keep reading to learn about things to consider when using the Real-time index type, TSVpipe, or when connecting to a database.
 
 ##Option 0 (realtime index)##
 
@@ -182,6 +180,13 @@ Go watch a video where I run through all these steps, [here](https://www.youtube
 Maybe you want to use your database. If you don't want to edit the config file I've included, then just use [this sample data](https://github.com/adriannuta/SphinxAutocompleteExample/blob/master/scripts/docs.tar.gz). Import it into your database. Then, just pass in necessary parameters to Sphinx when starting the container, which are:
 SQL_HOST, SQL_PORT, SQL_USER, SQL_PASS, and SQL_DB. gosphinx.conf will pick up the environment variables and build an index using the database you point to (see an example in 'First Steps'). 
 
+Start the container like this (change the values to match your setup):
+```
+docker run -d -p 9311:9306 -e SQL_DB="test" -e SQL_HOST="172.17.0.2" -e SQL_PASS="password" -e SQL_PORT="3307" -e SQL_USER="admin" quick/sphinx /sbin/my_init
+```
+
+The "-p 9311:9306" means that we've got Sphinx listening to 9306 from within the container, but we'll access Sphinx on 9311 from the host machine. And, in case you're wondering, /sbin/my_init will run 'indexandsearch.sh'.
+
 ###Custom Table###
 To index a custom table (one that is not built with the sample data), just edit gosphinx.conf. Change these things:
 ```
@@ -192,8 +197,6 @@ sql_field_string = content
 You don't need to declare fulltext fields unless you want to see the text in the result set (then do like I did, use sql_field_string). Then, just declare the different attribute types to match the data types in your table. Either way, you can still pass the connection parameters in when starting the container...
 
 
-
-The "-p 9311:9306" means that we've got Sphinx listening to 9306 from within the container, but we'll access Sphinx on 9311 from the host machine. And, in case you're wondering, /sbin/my_init will run 'indexandsearch.sh'.
 
 So, after changing the "-e"s to match your setup, run that command, open up the command line interface, and start Sphinx searching!!
 ```
