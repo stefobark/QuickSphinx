@@ -62,9 +62,9 @@ ATTACH INDEX diskindex TO RTINDEX rtindex
 
 Go watch a video where I run through all these steps, [here](https://www.youtube.com/watch?v=y32TdSOzkg8).
 
-I put a little tsv file in there, so now you can just open up the command line interface and start searching.
+I put a little tsv file in there, so after you build and run the container, just use the command line interface tool to start searching.
 
-Start it up!
+Like this:
 ```
 mysql -h0 -P9311
 ```
