@@ -277,3 +277,40 @@ workers=threads
 }
 ```
 The two containers I have running are listening for MySQL protocol on 940\* and for Sphinx protocol on 930\*. So, when I start up searchd for this Master Sphinx instance, it will talk to the other Sphinges (plural for 'Sphinx') on 9306 and 9307, but you can open the MySQL command line tool on 9406 and 9407 to take a look at what's going on and add or take away stuff from your indexes.
+
+###Start Searchd###
+This Sphinx instance will be the middle-man, passing requests to all the searchds you've mapped out in the configuration. Save the configuration file somewhere and use it to start searchd. I'll name mine bsphinx.conf.
+
+From the directory where your configuration file lives, try this:
+```
+ sudo searchd -c bsphinx.conf
+```
+Now, take a look at distributed search in action:
+```
+stefo@ubuntu:/var/www/html/QuickSphinx$ mysql -h0 -P9999
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 1
+Server version: 2.2.5-id64-release (r4825)
+
+Copyright (c) 2000, 2014, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> select * from dist;
++------+
+| id   |
++------+
+|    1 |
+|    2 |
+|    3 |
+|    4 |
++------+
+4 rows in set (0.30 sec)
+```
+1 and 2 are from the first Sphinx container, 3 and 4 are from the second. Just query the master. 
+
+One Sphinx to rule them all!
