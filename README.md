@@ -278,6 +278,22 @@ workers=threads
 ```
 The two containers I have running are listening for MySQL protocol on 940\* and for Sphinx protocol on 930\*. So, when I start up searchd for this Master Sphinx instance, it will talk to the other Sphinges (plural for 'Sphinx') on 9306 and 9307, but you can open the MySQL command line tool on 9406 and 9407 to take a look at what's going on and add or take away stuff from your indexes.
 
+####HA####
+To try out the high availability strategies provided by Sphinx, just push the same data into multiple indexes and list out each of the instances within the same 'agent'.
+
+Like this:
+```
+agent=127.0.0.1:9306|127.0.0.1:9307:test
+```
+
+And choose your [HA strategy](http://sphinxsearch.com/docs/current.html#conf-ha-strategy).
+
+Like this:
+```
+ha_strategy = nodeads
+```
+
+
 ###Start Searchd###
 This Sphinx instance will be the middle-man, passing requests to all the searchds you've mapped out in the configuration. Save the configuration file somewhere and use it to start searchd. I'll name mine bsphinx.conf.
 
