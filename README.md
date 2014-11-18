@@ -17,6 +17,7 @@ Using [Docker](https://www.docker.com/)? If so, here's a really quick and easy w
   0. [Use Sample Data](https://github.com/stefobark/QuickSphinx#point-to-your-database)
   1. [Use Custom Data](https://github.com/stefobark/QuickSphinx#custom-table)
   2. [Wildcard Example](https://github.com/stefobark/QuickSphinx#wildcard-example)
+4. [Distributed Index](https://github.com/stefobark/QuickSphinx#option-3-distributed)
 
 ##First Steps##
 ###Build###
@@ -221,3 +222,58 @@ weight(): 1727
 Then, go to http://sphinxsearch.com to keep learning about Sphinx.
 
 I'll be tweaking this configuration (to enable some cool features). When I do, I'll update this readme to show them off. 
+
+##Option 3: Distributed##
+
+You can use this container to play around with distributed indexing/search. 
+
+Just start up a few Sphinx containers!
+
+###First Sphinx:###
+```
+docker run -d -p 9306:9306 -p 9406:9406 QuickSphinx /sbin/my_init
+```
+Then, INSERT some content:
+```
+mysql -h0 -P9406
+...
+insert into rt_test values (1, 'something', 'something');
+insert into rt_test values (2, 'something else', 'something else');
+```
+
+###Second Sphinx:###
+```
+docker run -d -p 9307:9306 -p 9407:9406 QuickSphinx /sbin/my_init
+```
+Then, INSERT some more content:
+```
+mysql -h0 -P9407
+...
+insert into rt_test values (3, 'more', 'stuff');
+insert into rt_test values (4, 'goes', 'here');
+```
+Repeat this for as long as you like. I'll stop at 2 Sphinx instances. You can run multiple Sphinx instances on one machine without Docker, but this way is a bit easier.
+
+###Configure the Master###
+Configuration for your distributed index configuration will look something like this:
+```
+index dist
+{
+type=distributed
+agent=127.0.0.1:9306:rt_test
+agent=127.0.0.1:9307:rt_test
+
+}
+searchd
+{
+listen=9999:mysql41
+log=/var/log/sphinx/searchd.log
+query_log=/var/log/sphinx/query.log
+query_log_format=sphinxql
+read_timeout=5
+max_children=30
+pid_file=/var/run/sphinx/searchd.pid
+workers=threads
+}
+```
+The two containers I have running are listening for MySQL protocol on 940\* and for Sphinx protocol on 930\*. So, when I start up searchd for this Master Sphinx instance, it will talk to the other Sphinges (plural for 'Sphinx') on 9306 and 9307, but you can open the MySQL command line tool on 9406 and 9407 to take a look at what's going on and add or take away stuff from your indexes.
