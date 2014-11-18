@@ -27,7 +27,7 @@ docker build -t quick/sphinx .
 
 ###Run###
 ```
-docker run -d -p 9306:9306 quick/sphinx /sbin/my_init
+docker run -d -p 9406:9406 quick/sphinx /sbin/my_init
 ```
 
 Keep reading to learn about things to consider when using the Real-time index type, TSVpipe, or when connecting to a database.
@@ -66,7 +66,7 @@ I put a little tsv file in there, so after you build and run the container, just
 
 Like this:
 ```
-mysql -h0 -P9311
+mysql -h0 -P9406
 ```
 
 ####There's a [JSON attribute](http://sphinxsearch.com/blog/2013/08/08/full-json-support-in-trunk/) in this index, so you might try some things like...####
@@ -182,10 +182,10 @@ SQL_HOST, SQL_PORT, SQL_USER, SQL_PASS, and SQL_DB. gosphinx.conf will pick up t
 
 Start the container like this (change the values to match your setup):
 ```
-docker run -d -p 9311:9306 -e SQL_DB="test" -e SQL_HOST="172.17.0.2" -e SQL_PASS="password" -e SQL_PORT="3307" -e SQL_USER="admin" quick/sphinx /sbin/my_init
+docker run -d -p 9406:9406 -e SQL_DB="test" -e SQL_HOST="172.17.0.2" -e SQL_PASS="password" -e SQL_PORT="3307" -e SQL_USER="admin" quick/sphinx /sbin/my_init
 ```
 
-The "-p 9311:9306" means that we've got Sphinx listening to 9306 from within the container, but we'll access Sphinx on 9311 from the host machine. And, in case you're wondering, /sbin/my_init will run 'indexandsearch.sh'.
+The "-p 9406:9406" means that we've got Sphinx listening to 9306 from within the container, but we'll access Sphinx on 9311 from the host machine. And, in case you're wondering, /sbin/my_init will run 'indexandsearch.sh'.
 
 ###Custom Table###
 To index a custom table (one that is not built with the sample data), just edit gosphinx.conf. Change these things:
@@ -200,7 +200,7 @@ You don't need to declare fulltext fields unless you want to see the text in the
 
 So, after changing the "-e"s to match your setup, run that command, open up the command line interface, and start Sphinx searching!!
 ```
-mysql -h0 -P9311
+mysql -h0 -P9406
 SELECT *, weight() FROM test WHERE MATCH('@title distributed') \G
 ```
 
